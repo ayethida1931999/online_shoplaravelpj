@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 
 class OrderController extends Controller
 {
@@ -19,13 +18,19 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders =Order::all();//use item model
-        
-        return view('backend.orders.order',compact('orders'));
+        $date1 = $request->sdate;
+        $date2 = $request->edate;
+
+        if ($request->sdate && $request->edate) {
+            $orders = Order::whereBetween('orderdate', [new Carbon($date1), new Carbon($date2)])->where('status',0)->get();
+        }else{
+            $orders = Order::all();
         }
 
+        return view('backend.orders.index',compact('orders'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -45,23 +50,30 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-    $cartArr=json_decode($request->shop_data);///arr
-    $total=0;
-    foreach($cartArr as $row){
-        $total+=($row->price*$row->qty);
-    }
-    $order=new order();
-    $order->voucherno=uniqid();//8880897
-    $order->orderdate=date('Y-m-d');
-    $order->user_id=Auth::id();//auth id(1=>users table)
-    $order->note=$request->notes;
-    $order->total=$total;
-    $order->save();//only saved into order table
-    //save into order_deatail
-    foreach ($cartArr as $row) {
-        $order->items()->attach($row->id,['qty'=>$row->qty]);
-    }
-    return 'Successful!';
+        // dd($request->notes);
+        $cartArr = json_decode($request->shop_data); // arr
+        
+        // $cartArr = $myArr->product_list; // if use array in localstorage
+
+        $total = 0;
+        foreach ($cartArr as $row) {
+            $total+=($row->price * $row->qty);
+        }
+
+        $order = new Order;
+        $order->voucherno = uniqid(); // 8880598734
+        $order->orderdate = date('Y-m-d');
+        $order->user_id = Auth::id(); // auth id (1 => users table)
+        $order->note = $request->notes;
+        $order->total = $total;
+        $order->save(); // only saved into order table
+
+        // save into order_detail
+        foreach ($cartArr as $row) {
+            $order->items()->attach($row->id,['qty'=>$row->qty]);
+        }
+
+        return 'Successful!';
     }
 
     /**

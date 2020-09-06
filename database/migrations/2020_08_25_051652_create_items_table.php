@@ -19,21 +19,21 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->text('photo');
             $table->integer('price');
-            $table->integer('discount');//10%
+            $table->integer('discount'); // 10(%)
             $table->text('description');
+            
             $table->unsignedBigInteger('subcategory_id');
             $table->unsignedBigInteger('brand_id');
-            //realationship ချိတ်ဆက်ပုံ
+
+             // relationship ချိတ်ဆက်ပုံ 
             $table->foreign('subcategory_id')
-                  ->references('id')
-                  ->on('subcategories')
-                  ->onDelete('cascade');
+                  ->references('id')->on('subcategories')
+                  ->onDelete('cascade'); 
+                  
             $table->foreign('brand_id')
-                  ->references('id')
-                  ->on('brands')
+                  ->references('id')->on('brands')
                   ->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 

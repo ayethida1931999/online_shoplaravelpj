@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Item;
+use App\Brand;
+use App\Subcategory;
+use App\Category;
 
 class PageController extends Controller
 {
     public function mainfun($value='')
     {   
-         $items=Item::all()->take(6);
-        return view('main',compact('items'));
+    $discountItems = Item::where('discount','>',0)->take(5)->get();
+    $brands = Brand::take(5)->get();
+    $categories = Category::take(5)->get();
+
+    return view('main',compact('discountItems','brands','categories'));
 
     }
 
@@ -24,19 +30,21 @@ class PageController extends Controller
         return view('register');
     }
 
-    public function brandfun($value='')
+    public function brandfun($id)
     {
-        return view('brand');
+       $brand = Brand::find($id);
+    return view('brand',compact('brand'));
     }
 
-    public function itemdetailfun($value='')
+    public function itemdetailfun($id)
     {
-        return view('itemdetail');
+        $item = Item::find($id);
+    return view('itemdetail',compact('item'));
     }
 
     public function promotionfun($value='')
     {
-        return view('promotion');
+       return view('promotion');
     }
 
     public function shoppingcartfun($value='')
@@ -44,12 +52,24 @@ class PageController extends Controller
         return view('shoppingcart');
     }
 
-    public function subcategoryfun($value='')
+    public function subcategoryfun($id)
     {
-        return view('subcategory');
+        $subcategory=Subcategory::find($id);
+        return view('subcategory',compact('subcategory'));
     }
     function showItemdetail(){
         return view('itemdetail');
     }
+    public function category($id)
+  {
+    $category = Category::find($id);
+    return view('category',compact('category'));
+  }
+  public function filteritems($id)
+  {
+    $subcategory = Subcategory::find($id);
+    $subcategory->setRelation('items', $subcategory->items()->paginate(3));
+    return view('filteritems',compact('subcategory'));
+  }
 
 }

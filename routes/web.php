@@ -19,14 +19,16 @@ Route::get('loginform','PageController@loginfun')->name('loginpage');
 
 Route::get('registerform','PageController@registerfun')->name('registerpage');
 
-Route::get('brand','PageController@brandfun')->name('brandpage');
+Route::get('brand/{id}','PageController@brandfun')->name('brandpage');
 
-Route::get('itemdetail','PageController@itemdetailfun')->name('itemdetailpage');
+Route::get('itemdetail/{id}','PageController@itemdetailfun')->name('itemdetailpage');
+Route::get('filteritems/{id}','PageController@filteritems')->name('filteritemspage');
+Route::get('category/{id}','PageController@category')->name('categorypage');
 
 Route::get('promotion','PageController@promotionfun')->name('promotionpage');
 Route::get('shoppingcart','PageController@shoppingcartfun')->name('shoppingcartpage');
 
-Route::get('subcategory','PageController@subcategoryfun')->name('subcategorypage');
+Route::get('subcategory/{id}','PageController@subcategoryfun')->name('subcategorypage');
 //backend
 Route::middleware('role:Admin')->group(function(){
 	Route::get('dashboard','backendController@dashboardfun')->name('dashboardpage');

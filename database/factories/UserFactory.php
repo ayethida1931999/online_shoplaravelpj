@@ -26,3 +26,11 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+$factory->define(Customer::class, function (Faker $faker) {
+    return [
+      'phoneno' => '09-'.$faker->randomNumber($nbDigits = 9, $strict = true),
+      'address' => $faker->address,
+      'profile' => 'frontend/profileimg/' . $faker->image('public/frontend/profileimg',200,200, null, false),
+    ];
+});
+

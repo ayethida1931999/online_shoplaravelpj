@@ -114,16 +114,16 @@
 					<i class="icofont-search"></i>
 				</div>
 
-				<a href="{{route('shoppingcartpage')}}" class="text-decoration-none d-xl-inline d-lg-inline d-md-inline d-sm-none d-none shoppingcartLink"> 
-					<i class="icofont-shopping-cart"></i> 
-					<span class="badge badge-pill badge-light badge-notify cartNotistyle cartNoti">1</span>
-					<span> 4800Ks</span>
-				</a>
+				 <a href="{{route('shoppingcartpage')}}" class="text-decoration-none d-xl-inline d-lg-inline d-md-inline d-sm-none d-none shoppingcartLink"> 
+          <i class="icofont-shopping-cart"></i> 
+          <span class="badge badge-pill badge-light badge-notify cartNotistyle cartNoti"></span>
+          <span class="cartTotal"></span> Ks
+        </a>
 
-				<a href="{{route('shoppingcartpage')}}" class="text-decoration-none d-xl-none d-lg-none d-md-none d-sm-inline-block d-inline-block shoppingcartLink"> 
-					<i class="icofont-shopping-cart"></i>
-					<span class="badge badge-pill badge-light badge-notify cartNotistyle cartNoti"> 0</span>
-				</a>
+        <a href="{{route('shoppingcartpage')}}" class="text-decoration-none d-xl-none d-lg-none d-md-none d-sm-inline-block d-inline-block shoppingcartLink"> 
+          <i class="icofont-shopping-cart"></i>
+          <span class="badge badge-pill badge-light badge-notify cartNotistyle cartNoti"></span>
+        </a>
 
 				<!-- App Download -->
 
